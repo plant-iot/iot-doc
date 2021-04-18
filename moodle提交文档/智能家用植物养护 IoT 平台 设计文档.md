@@ -7,9 +7,10 @@
 [TOC]
 ## 变更记录
 
-| 修改人员 | 日期      | 变更原因 | 版本号 |
-| -------- | --------- | -------- | ------ |
-| 许杨     | 2021.4.14 | 最初草稿 | v1.0   |
+| 修改人员 | 日期      | 变更原因                         | 版本号 |
+| -------- | --------- | -------------------------------- | ------ |
+| 许杨     | 2021.4.14 | 最初草稿                         | v1.0   |
+| 许杨     | 2021.4.18 | 更新数据库设计及设备管理部分内容 | v2.0   |
 
 ## 1 引言
 
@@ -102,6 +103,27 @@ service层各模块的职责如表 5-2-1-1 所示。
 | Connect.sendCommand | 语法     | public boolean sendCommand(Long deviceId, String command, CommandType type); |
 |                     | 前置条件 | 设备存在，命令合法                                           |
 |                     | 后置条件 | 向设备下发命令                                               |
+| TODO                |          |                                                              |
+
+<center>表 5-2-1-3 设备管理模块的接口规范</center>
+
+| 接口             |          |                                                      |
+| ---------------- | -------- | ---------------------------------------------------- |
+| Device.addDevice | 语法     | public long addDevice(Long userId, DeviceType type); |
+|                  | 前置条件 | 用户存在                                             |
+|                  | 后置条件 | 创建设备                                             |
+| TODO             |          |                                                      |
+
+<center>表 5-2-1-4 用户管理模块的接口规范</center>
+
+| 接口        |          |                                                         |
+| ----------- | -------- | ------------------------------------------------------- |
+| User.login  | 语法     | public LoginResult login(Long userId, String password); |
+|             | 前置条件 | 无                                                      |
+|             | 后置条件 | 用户登入                                                |
+| User.logout | 语法     | public void logout(Long userId);                        |
+|             | 前置条件 | 无                                                      |
+|             | 后置条件 | 用户登出                                                |
 
 ### 5.3 dao层的分解
 
@@ -113,12 +135,18 @@ dao层模块的职责如表 5-3-1 所示。
 
 <center>表 5-3-1 dao层模块的职责</center>
 
-| 模块              | 职责                                               |
-| ----------------- | -------------------------------------------------- |
-| UserRepository    | 基于JpaRepository提供对User的增、删、改、查服务    |
-| DeviceRepository  | 基于JpaRepository提供对Device的增、删、改、查服务  |
-| DataRepository    | 基于JpaRepository提供对Data的增、删、改、查服务    |
-| CommandRepository | 基于JpaRepository提供对Command的增、删、改、查服务 |
+| 模块                          | 职责                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| UserRepository                | 基于JpaRepository提供对User的增、删、改、查服务              |
+| DeviceRepository              | 基于JpaRepository提供对Device的增、删、改、查服务            |
+| DataRepository                | 基于JpaRepository提供对Data的增、删、改、查服务              |
+| CommandRepository             | 基于JpaRepository提供对Command的增、删、改、查服务           |
+| ThingModelRepository          | 基于JpaRepository提供对ThingModel的增、删、改、查服务        |
+| ThingModelServiceRepository   | 基于JpaRepository提供对ThingModelService的增、删、改、查服务 |
+| ThingModelRecordRepository    | 基于JpaRepository提供对ThingModelRecord的增、删、改、查服务  |
+| DeviceGroupRelationRepository | 基于JpaRepository提供对DeviceGroupRelation的增、删、改、查服务 |
+| DeviceOnOffRecordRepository   | 基于JpaRepository提供对DeviceOnOff的增、删、改、查服务       |
+| DeviceGroupRepository         | 基于JpaRepository提供对DeviceGroup的增、删、改、查服务       |
 
 #### 5.3.2 dao层模块的接口规范
 
@@ -143,12 +171,47 @@ dao层模块的接口规范如JpaRepository规范。
 
   - 用于记录平台连接的设备信息
 
-  - | 列        | 描述             | 类型   | 备注           |
-    | --------- | ---------------- | ------ | -------------- |
-    | device_id | 设备id           | long   | 自增主键       |
-    | user_id   | 对应用户id       | long   | 外键，连接User |
-    | type      | 设备类型         | string |                |
-    | topic     | 设备对应MQTT主题 | string |                |
+  - | 列            | 描述             | 类型    | 备注                 |
+    | ------------- | ---------------- | ------- | -------------------- |
+    | device_id     | 设备id           | long    | 自增主键             |
+    | user_id       | 对应用户id       | long    | 外键，连接User       |
+    | type          | 设备类型         | string  |                      |
+    | topic         | 设备对应MQTT主题 | string  |                      |
+    | register_time | 注册时间         | time    |                      |
+    | state         | 设备状态         | string  |                      |
+    | is_online     | 设备是否在线     | boolean |                      |
+    | thing_model   | 物模型           | int     | 外键，连接ThingModel |
+
+- DeviceGroup
+
+  - 用于记录设备群组信息
+
+  - | 列        | 描述       | 类型   | 备注           |
+    | --------- | ---------- | ------ | -------------- |
+    | id        | id         | long   | 自增主键       |
+    | user_id   | 对应用户id | long   | 外键，连接User |
+    | groupName | 群组名称   | string |                |
+
+- DeviceGroupRelation
+
+  - 用于记录设备群组与设备的对应信息
+
+  - | 列        | 描述   | 类型 | 备注                  |
+    | --------- | ------ | ---- | --------------------- |
+    | id        | id     | long | 自增主键              |
+    | device_id | 设备id | long | 外键，连接Device      |
+    | group_id  | 群组id | long | 外键，连接DeviceGroup |
+
+- DeviceOnOffRecord
+
+  - 用于记录设备上线、下线信息
+
+  - | 列        | 描述       | 类型   | 备注             |
+    | --------- | ---------- | ------ | ---------------- |
+    | id        | id         | long   | 自增主键         |
+    | device_id | 设备id     | long   | 外键，连接Device |
+    | time      | 发生时间   | time   |                  |
+    | action    | 上下线动作 | string |                  |
 
 - Data
 
@@ -164,7 +227,7 @@ dao层模块的接口规范如JpaRepository规范。
 
 - Command
 
-  - 用于记录设备上报的数据
+  - 用于记录向设备下发的命令
 
   - | 列        | 描述         | 类型   | 备注                          |
     | --------- | ------------ | ------ | ----------------------------- |
@@ -173,3 +236,35 @@ dao层模块的接口规范如JpaRepository规范。
     | device_id | 设备id       | long   | 外键，连接Device              |
     | type      | 命令类型     | string |                               |
     | command   | 命令内容     | string |                               |
+
+- ThingModel
+  
+  - 物模型，用来定义设备的服务
+  
+  - | 列          | 描述       | 类型   | 备注     |
+    | ----------- | ---------- | ------ | -------- |
+    | model_id    | 物模型id   | int    | 自增主键 |
+    | model_name  | 物模型名称 | string |          |
+    | device_type | 设备类型   | string |          |
+  
+- ThingModelService
+
+  - TODO
+
+  - | 列           | 描述 | 类型   | 备注 |
+    | ------------ | ---- | ------ | ---- |
+    | service_name |      | string | 主键 |
+    | type         |      | int    |      |
+    | description  | 描述 | string |      |
+    | unit         | 单位 | string |      |
+    | quantity     |      | double |      |
+
+- ThingModelRecord
+
+  - TODO
+
+  - | 列           | 描述 | 类型   | 备注                        |
+    | ------------ | ---- | ------ | --------------------------- |
+    | record_id    | id   | long   | 自增主键                    |
+    | thing_model  |      | int    | 外键，连接ThingModel        |
+    | service_name |      | string | 外键，连接ThingModelService |
