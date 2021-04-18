@@ -46,15 +46,26 @@
    
 3. 前端配置
 
-   1. 配置npm，建议使用8.11.3版本的node.js
+   1. 配置npm，建议使用8.11.3版本的node.js，2.6.8的vue
 
 ## 四、运行项目
 
 1. 启动后端项目
+   
    1. 启动后端IotApplication.java
 2. 启动前端项目
    1. 安装所需依赖
+   
    2. 打开命令行，进入到项目目录iot-frontend下
+   
    3. 在命令行中执行```npm install```命令
+   
+      <img src="pic\部署文档\front1.png" style="zoom:50%;" />
+   
    4. 在命令行中执行```npm run dev```命令
+   
+      <img src="pic\部署文档\front2.png" style="zoom:50%;" />
+   
    5. 根据命令行显示的url信息在浏览器中打开相应网页
+   
+      <img src="pic\部署文档\front3.png" style="zoom:50%;" />
