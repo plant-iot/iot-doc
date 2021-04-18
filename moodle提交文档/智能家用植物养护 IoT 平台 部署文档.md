@@ -32,15 +32,21 @@
 
 2. 后端配置
 
-   1. 修改iot-backend\src\main\resources\application.properties文件
+   1. 在mysql数据库中建立iot_platform的数据库
+
+   2. 修改iot-backend\src\main\resources\application.properties文件
 
       1. 修改第9~10行mysql用户名、密码
 
          ![](pic\部署文档\mysql_config.png)
 
       2. 修改第32~38行MQTT配置
-
+   
          ![](pic\部署文档\mysql_config.png)
+   
+3. 前端配置
+
+   1. 配置npm，建议使用8.11.3版本的node.js
 
 ## 四、运行项目
 

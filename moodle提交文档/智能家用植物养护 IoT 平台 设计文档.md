@@ -249,7 +249,7 @@ dao层模块的接口规范如JpaRepository规范。
   
 - ThingModelService
 
-  - TODO
+  - 记录物模型的服务
 
   - | 列           | 描述 | 类型   | 备注 |
     | ------------ | ---- | ------ | ---- |
@@ -261,7 +261,7 @@ dao层模块的接口规范如JpaRepository规范。
 
 - ThingModelRecord
 
-  - TODO
+  - 记录ThingModelService和物模型的对应关系
 
   - | 列           | 描述 | 类型   | 备注                        |
     | ------------ | ---- | ------ | --------------------------- |
