@@ -72,6 +72,7 @@
 | GroupController      | 设备组的管理、信息展示 |
 | ThingModelController | 物模型的管理、信息展示 |
 | UserController       | 用户管理               |
+| DataController       | 传感器数据展示         |
 
 ### 5.2 service层的分解
 
@@ -105,6 +106,12 @@ service层各模块的职责如表 5-2-1-1 所示。
 | Connect.sendCommand | 语法     | Map<Long, String> sendCommand(Long[] deviceIdList, String[] commands, Double[] values); |
 |                     | 前置条件 | 设备存在，命令合法                                           |
 |                     | 后置条件 | 向设备下发命令                                               |
+| Connect.getData     | 语法     | List\<DataRecord\> getData(long userId);                     |
+|                     | 前置条件 | 用户存在                                                     |
+|                     | 后置条件 | 展示传感器数据                                               |
+| Connect.getData     | 语法     | List\<DataRecord\> getData(long userId, String dataType, String start, String end); |
+|                     | 前置条件 | 用户存在                                                     |
+|                     | 后置条件 | 展示传感器数据                                               |
 
 <center>表 5-2-1-3 设备管理模块的接口规范</center>
 
