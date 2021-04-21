@@ -70,6 +70,6 @@
    5. 根据命令行显示的url信息在浏览器中打开相应网页
    
       <img src="pic\部署文档\front3.png" style="zoom:50%;" />
-   6. 查看数据分析结果前，先运行iot-frontend/static/下的analysis.py文件(需要pip install numpy)
-      `python analysis.py`
+   6. 查看数据分析结果前，先运行iot-frontend/static/下的analysis.py文件 `python analysis.py`
+      > requirements: python3 numpy pymysql
 
