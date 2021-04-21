@@ -28,11 +28,11 @@
 
 用户登录成功后自动跳转到设备列表界面，也可以通过点击界面左侧的设备列表进行跳转。
 
-在该界面，用户可以对设备进行一系列操作，譬如：禁用设备、启用设备等。
+在该界面，用户可以对设备进行一系列操作，譬如：禁用设备、启用设备、删除设备等。
 
 <center>设备列表界面</center>
 
-<img src="pic\用户手册\login.png" style="zoom: 25%;" />
+<img src="pic\用户手册\device list.png" style="zoom: 25%;" />
 
 ### 创建设备
 
@@ -40,7 +40,7 @@
 
 <center>创建设备界面</center>
 
-<img src="pic\用户手册\login.png" style="zoom: 25%;" />
+<img src="pic\用户手册\create device.png" style="zoom: 25%;" />
 
 ### 查看设备日志
 
@@ -64,11 +64,32 @@
 
 <center>物模型模板界面</center>
 
-<img src="pic\用户手册\login.png" style="zoom: 25%;" />
+<img src="pic\用户手册\thing model.png" style="zoom: 25%;" />
 
 ## 规则引擎
 
+### 查看规则列表
 
+点击页面左侧的“规则设置”按钮，用户可以进入规则设置页面，查看自己已经定义的规则信息。
+
+<center>规则列表界面</center>
+
+<img src="pic\用户手册\rule1.png" style="zoom: 25%;" />
+
+### 新建规则
+
+在规则列表页面点击创建规则会跳出一个模态框，用户在输入相应数据并点击确定后即可创建规则。
+
+<center>新建规则界面</center>
+
+<img src="pic\用户手册\create rule.png" style="zoom: 25%;" />
 
 ## 数据分析
 
+### 数据告警页面
+
+点击页面左侧的“数据告警”按钮，用户可以进入数据告警页面，查看自己已经定义的规则信息。
+
+<center>数据告警界面</center>
+
+<img src="pic\用户手册\alarm.png" style="zoom:25%;" />
