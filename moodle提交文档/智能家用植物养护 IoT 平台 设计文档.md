@@ -164,6 +164,7 @@ service层各模块的职责如表 5-2-1-1 所示。
 
 
 <center>表 5-2-1-5 规则引擎模块的接口规范</center>
+
 | 接口        |          |                                                         |
 | ----------- | -------- | ------------------------------------------------------- |
 | Rule.addRule  | 语法     | public Long addRule(RuleType type, Long user_id, Double data, RuleAction rule_state; |
