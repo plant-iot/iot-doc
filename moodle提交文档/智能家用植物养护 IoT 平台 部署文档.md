@@ -45,7 +45,7 @@
    
          ![](pic\部署文档\mysql_config.png)
          
-   3. 安装python3环境，并安装numpy 和 pymysql包 
+   3. 安装python3环境，并安装numpy、pymysql、xlrd、statsmodels、pandas包 
    
 3. 前端配置
 
